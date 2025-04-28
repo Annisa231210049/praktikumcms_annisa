@@ -1,20 +1,18 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\StaffController;
+use App\Http\Controllers\ProgramPesertaController;
 
-// Route yang sudah ada
-Route::get('/staff', [StaffController::class, 'index'])->name('staff.index');
-Route::get('/staff/{id}', [StaffController::class, 'show'])->name('staff.show');
+Route::get('/programs', [ProgramPesertaController::class, 'showPrograms']);
+Route::get('/participants', [ProgramPesertaController::class, 'showParticipants']);
+Route::post('/participants/find', [ProgramPesertaController::class, 'findParticipantByName'])->name('findParticipant');
 
-// Route baru untuk halaman login
-Route::get('/staff/login', [StaffController::class, 'loginForm'])->name('staff.loginForm');
-Route::post('/staff/login', [StaffController::class, 'login'])->name('staff.login');
+// Edit dan Update Peserta
+Route::get('/participants/edit/{id}', [ProgramPesertaController::class, 'edit'])->name('participants.edit');
+Route::post('/participants/update/{id}', [ProgramPesertaController::class, 'update'])->name('participants.update');
 
-Route::get('/staff/keuangan', function () {
-    return view('staff.keuangan');
-})->middleware('checkRole:staff keuangan');
+// Hapus Peserta
+Route::delete('/participants/{id}', [ProgramPesertaController::class, 'destroy'])->name('participants.destroy');
 
-Route::get('/staff/akademik', function () {
-    return view('staff.akademik');
-})->middleware('checkRole:staff akademik');
+Route::get('/programs/show/{programName}', [ProgramPesertaController::class, 'showProgram']);
+
